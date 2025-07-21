@@ -19,7 +19,7 @@ Visit http://localhost:3000 to view the application.
 
 ```json
 {
-    "name": "chess-project",
+    "name": "chess_project",
     "version": "1.0.0",
     "scripts": {
         "dev": "vite",
