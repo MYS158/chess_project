@@ -28,3 +28,23 @@
 - No usar el `any`.
 - Usar el `;`.
 - Puro backend para empezar.
+
+## Fase: Piece
+- [ ] Crear la clase `Piece`.
+- [ ] Implementar la notación de coordenadas y movimientos.
+- [ ] Crear el método `getPossibleMoves`.
+- [ ] Crear el método `getPossibleCaptures`.
+- [ ] Crear el código de color.
+
+## Fase: Bishop
+- [ ] Crear la clase `Bishop`.
+- [ ] Hacer que herede de `Piece`.
+- [ ] Hacer que la pieza se mueva a cualquier casilla.
+- [ ] Que funcionen los clicks.
+- [ ] Que funcionen las capturas.
+- [ ] Reescribir el método `getPossibleMoves`.
+- [ ] Reescribir el método `getPossibleCaptures`.
+- [ ] Validar los clicks.
+
+## Código de color
+Trabajo de Soria.
