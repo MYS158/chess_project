@@ -1,7 +1,7 @@
 import './styles/style.css';
 import { Game } from './chess/Game';
 
-const app = document.getElementById('app')!;
-const game = new Game(app);
+const canva = document.getElementById('game')!;
+const game = new Game(canva);
 
 game.start();
