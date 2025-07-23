@@ -1,5 +1,6 @@
 ﻿import { Position } from '../Position';
 import { Square } from './Square';
+import { Piece } from '../pieces/Piece';
 import { Color } from '../pieces/Color';
 import { Bishop } from '../pieces/Bishop';
 
@@ -48,7 +49,13 @@ export class Board {
         for (const row of this.squares) {
             for (const { element } of row) {
                 element.innerHTML = '';
-                element.classList.remove('selected-highlight', 'move-highlight');
+                element.classList.remove(
+                    'selected-highlight',
+                    'move-highlight',
+                    'piece',
+                    'white',
+                    'black'
+                );
             }
         }
     }
@@ -70,5 +77,13 @@ export class Board {
         square.element.textContent = bishop.symbol;
         square.element.classList.add('piece', bishop.color);
         return bishop;
+    }
+
+    renderPieces(pieces: Array<Piece>): void {
+        for (const piece of pieces) {
+            const square = this.getSquare(piece.position);
+            square.element.textContent = piece.symbol;
+            square.element.classList.add('piece', piece.color);
+        }
     }
 }

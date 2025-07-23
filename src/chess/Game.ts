@@ -1,4 +1,5 @@
-import { Board } from './board/Board';
+﻿import { Board } from './board/Board';
+import { Piece } from './pieces/Piece';
 
 export class Game {
     private board!: Board;
@@ -11,65 +12,52 @@ export class Game {
         this.board = new Board();
         this.container.appendChild(this.board.element);
         this.setupPieces();
+        this.draw();
+        this.board.element.addEventListener('click', e =>
+            this.handleClick(e as MouseEvent)
+        );
     }
 
     reset(): void {
-        if (this.board) {
-            this.container.removeChild(this.board.element);
-        }
+        this.container.removeChild(this.board.element);
         this.start();
     }
 
-    setupPieces(): void {
-        // Create a bishop as an example
+    private setupPieces(): void {
+        // Example: single bishop at c6 (x=2, y=2)
         const bishop = this.board.createBishop('white', { x: 2, y: 2 });
-        
-        this.pieces.push(bishop);
-        this.board.element.addEventListener('click', (e) => this.handleClick(e));
+        this.pieces = [bishop];
     }
 
     private handleClick(e: MouseEvent): void {
-        const target = e.target as HTMLElement;
-        const square = this.board.getSquareFromElement(target);
+        const squareEl = e.target as HTMLElement;
+        const square = this.board.getSquareFromElement(squareEl);
         if (!square) return;
-
-        const clickedPos = square.position;
-        const clickedPiece = this.pieces.find(p =>
-            p.position.x === clickedPos.x && p.position.y === clickedPos.y
+        const pos = square.position;
+        const clicked = this.pieces.find(
+            p => p.position.x === pos.x && p.position.y === pos.y
         );
-
-        //this.board.clear();
-
         if (this.selectedPiece) {
-            const legalMoves = this.selectedPiece.getLegalMoves(this.pieces);
-            const isLegal = legalMoves.some(m => m.x === clickedPos.x && m.y === clickedPos.y);
-
-            if (isLegal) {
-                this.pieces = this.selectedPiece.move(clickedPos, this.pieces);
-                this.selectedPiece = null;
-                this.renderPieces();
-                return;
+            const moves = this.selectedPiece.getLegalMoves(this.pieces);
+            const legal = moves.some(m => m.x === pos.x && m.y === pos.y);
+            if (legal) {
+                this.pieces = this.selectedPiece.move(pos, this.pieces);
             }
-        }
-
-        if (clickedPiece) {
-            this.selectedPiece = clickedPiece;
-            this.board.highlight(clickedPiece.position, 'selected');
-            for (const move of clickedPiece.getLegalMoves(this.pieces)) {
-                this.board.highlight(move, 'move');
-            }
-        } else {
             this.selectedPiece = null;
+        } else if (clicked) {
+            this.selectedPiece = clicked;
         }
+        this.draw();
     }
 
-    private renderPieces(): void {
-        //this.board.clear();
-        for (const piece of this.pieces) {
-            const square = this.board.getSquare(piece.position);
-            square.element.textContent = piece.symbol;
-            square.element.classList.add('piece', piece.color);
+    private draw(): void {
+        this.board.clear();
+        this.board.renderPieces(this.pieces);
+        if (this.selectedPiece) {
+            this.board.highlight(this.selectedPiece.position, 'selected');
+            for (const m of this.selectedPiece.getLegalMoves(this.pieces)) {
+                this.board.highlight(m, 'move');
+            }
         }
     }
-
 }

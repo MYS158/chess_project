@@ -2,15 +2,15 @@
 import { Color } from './Color';
 
 export type PieceType = 'pawn' | 'rook' | 'knight' | 'bishop' | 'queen' | 'king';
-export type BoardState = ReadonlyArray<Piece>;
+export type BoardState = Array<Piece>;
 
 function positionsEqual(a: Position, b: Position): boolean {
     return a.x === b.x && a.y === b.y;
 }
 
 export abstract class Piece {
-    public abstract readonly type: PieceType;
-    public abstract readonly symbol: string;
+    public abstract type: PieceType;
+    public abstract symbol: string;
 
     constructor(
         public color: Color,
@@ -49,6 +49,8 @@ export abstract class Piece {
 
     protected cloneAt(newPos: Position): Piece {
         const copy = Object.create(this.constructor.prototype) as Piece;
+        copy.type = this.type;
+        copy.symbol = this.symbol;
         copy.color = this.color;
         copy.position = { x: newPos.x, y: newPos.y };
         return copy;
