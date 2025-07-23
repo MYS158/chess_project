@@ -1,7 +1,6 @@
-import './styles/style.css';
 import { Game } from './chess/Game';
 
-const app = document.getElementById('app')!;
-const game = new Game(app);
-
+const gameContainer = document.getElementById('game');
+if (!gameContainer) throw new Error('#game not found');
+const game = new Game(gameContainer);
 game.start();

@@ -1,4 +1,4 @@
-﻿import { Square, Position } from 'Square';
+﻿import { Square, Position } from './Square';
 import { Piece } from '../pieces/Piece'; // for renderPieces signature
 
 export class Board {
