@@ -1,7 +1,6 @@
-import './styles/style.css';
 import { Game } from './chess/Game';
 
-const canva = document.getElementById('game')!;
-const game = new Game(canva);
-
+const gameContainer = document.getElementById('game');
+if (!gameContainer) throw new Error('#game not found');
+const game = new Game(gameContainer);
 game.start();
