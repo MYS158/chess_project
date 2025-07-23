@@ -25,8 +25,11 @@ export class Game {
 
     private setupPieces(): void {
         // Example: single bishop at c6 (x=2, y=2)
-        const bishop = this.board.createBishop('white', { x: 2, y: 2 });
-        this.pieces = [bishop];
+        const bishop1 = this.board.createBishop('white', { x: 2, y: 1 });
+        const bishop2 = this.board.createBishop('black', { x: 4, y: 1 });
+        const bishop3 = this.board.createBishop('white', { x: 2, y: 7 });
+        const bishop4 = this.board.createBishop('black', { x: 4, y: 7 });
+        this.pieces = [bishop1, bishop2, bishop3, bishop4];
     }
 
     private handleClick(e: MouseEvent): void {
