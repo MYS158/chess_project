@@ -60,6 +60,10 @@ export class Board {
         );
     }
 
+    getSquare(pos: Position): Square {
+        return this.squares[pos.y][pos.x];
+    }
+
     createBishop(color: Color, pos: Position) {
         const bishop = new Bishop(color, pos);
         const square = this.squares[bishop.position.y][bishop.position.x];
