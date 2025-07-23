@@ -49,8 +49,8 @@ export abstract class Piece {
 
     protected cloneAt(newPos: Position): Piece {
         const copy = Object.create(this.constructor.prototype) as Piece;
-        copy.setColor(this.color);
-        copy.setPosition({ x: newPos.x, y: newPos.y });
+        copy.color = this.color;
+        copy.position = { x: newPos.x, y: newPos.y };
         return copy;
     }
 }
