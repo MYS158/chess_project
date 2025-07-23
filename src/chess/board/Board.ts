@@ -1,5 +1,7 @@
-﻿import { Square, Position } from './Square';
-import { Piece } from '../pieces/Piece'; // for renderPieces signature
+﻿import { Position } from '../Position';
+import { Square } from './Square';
+import { Color } from '../pieces/Color';
+import { Bishop } from '../pieces/Bishop';
 
 export class Board {
     public element: HTMLElement;
@@ -56,5 +58,13 @@ export class Board {
         square.element.classList.add(
             type === 'selected' ? 'selected-highlight' : 'move-highlight'
         );
+    }
+
+    createBishop(color: Color, pos: Position) {
+        const bishop = new Bishop(color, pos);
+        const square = this.squares[bishop.position.y][bishop.position.x];
+        square.element.textContent = bishop.symbol;
+        square.element.classList.add('piece', bishop.color);
+        return bishop;
     }
 }
