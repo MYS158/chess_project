@@ -38,9 +38,14 @@
 ## Fase: Bishop
 - [X] Crear la clase `Bishop`.
 - [X] Hacer que herede de `Piece`.
-- [ ] Hacer que la pieza se mueva a cualquier casilla.
-- [ ] Que funcionen los clicks.
-- [ ] Que funcionen las capturas.
+- [X] Hacer que la pieza se mueva a cualquier casilla.
+- [X] Que funcionen los clicks.
+- [X] Que funcionen las capturas.
 - [X] Reescribir el método `getPossibleMoves`.
-- [ ] Reescribir el método `getPossibleCaptures`.
-- [ ] Validar los clicks.
+- [X] Validar los clicks.
+
+## Fase: Knight // Soria
+- [ ] Crear la clase `Knight`.
+
+## Fase: Rook // Miguel
+- [ ] Crear la clase `Rook`.
