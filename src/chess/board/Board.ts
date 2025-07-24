@@ -1,10 +1,6 @@
-﻿import { Position } from '../Position';
-import { Square } from './Square';
-import { Piece } from '../pieces/Piece';
-import { Color } from '../pieces/Color';
-import { Bishop } from '../pieces/Bishop';
-import { Rook } from '../pieces/Rook';
-import { Knight } from '../pieces/Knight';
+﻿import { Square } from './Square';
+import { Position } from '../Position';
+import { Piece, Color, Bishop, Rook, Knight } from '../pieces';
 
 export class Board {
     public element: HTMLElement;
