@@ -32,7 +32,11 @@ export class Game {
         const wR2 = this.board.createPiece('rook', 'white', { x: 7, y: 7 });
         const bR1 = this.board.createPiece('rook', 'black', { x: 0, y: 0 });
         const bR2 = this.board.createPiece('rook', 'black', { x: 7, y: 0 });
-        this.pieces = [wB1, wB2, bB1, bB2, wR1, wR2, bR1, bR2];
+        const wN1 = this.board.createPiece('knight', 'white', { x: 1, y: 7 });
+        const wN2 = this.board.createPiece('knight', 'white', { x: 6, y: 7 });
+        const bN1 = this.board.createPiece('knight', 'black', { x: 1, y: 0 });
+        const bN2 = this.board.createPiece('knight', 'black', { x: 6, y: 0 });
+        this.pieces = [wB1, wB2, bB1, bB2, wR1, wR2, bR1, bR2, wN1, wN2, bN1, bN2];
     }
 
     private handleClick(e: MouseEvent): void {
