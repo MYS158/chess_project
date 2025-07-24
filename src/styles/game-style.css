@@ -29,11 +29,15 @@
 }
 
 .selected-highlight {
-    outline: 3px solid yellow;
+    box-shadow: inset 0 0 0 3px rgba(255, 255, 0, 0.8);
+    transition: box-shadow 0.2s ease-in-out;
+    z-index: 2;
 }
 
 .move-highlight {
-    outline: 2px dashed cyan;
+    box-shadow: inset 0 0 0 4px rgba(56, 255, 106, 0.6);
+    transition: box-shadow 0.2s ease-in-out;
+    z-index: 1;
 }
 
 .square span {
