@@ -3,6 +3,7 @@ import { Square } from './Square';
 import { Piece } from '../pieces/Piece';
 import { Color } from '../pieces/Color';
 import { Bishop } from '../pieces/Bishop';
+import { Rook } from '../pieces/Rook';
 
 export class Board {
     public element: HTMLElement;
@@ -71,12 +72,15 @@ export class Board {
         return this.squares[pos.y][pos.x];
     }
 
-    createBishop(color: Color, pos: Position) {
-        const bishop = new Bishop(color, pos);
-        const square = this.squares[bishop.position.y][bishop.position.x];
-        square.element.textContent = bishop.symbol;
-        square.element.classList.add('piece', bishop.color);
-        return bishop;
+    createPiece(type: string, color: Color, pos: Position): Piece {
+        switch (type) {
+            case 'bishop':
+                return new Bishop(color, pos);
+            case 'rook':
+                return new Rook(color, pos);
+            default:
+                throw new Error(`Unknown piece type: ${type}`);
+        }
     }
 
     renderPieces(pieces: Array<Piece>): void {
