@@ -4,5 +4,5 @@ export * from './Color';
 export * from './Bishop';
 export * from './Rook';
 export * from './Knight';
-// export * from './Queen';
-// export * from './King';
+export * from './Queen';
+export * from './King';

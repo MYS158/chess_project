@@ -1,6 +1,6 @@
 import { Square } from './Square';
 import { Position } from '../Position';
-import { Piece, Color, Bishop, Rook, Knight } from '../pieces';
+import { Piece, Color, Bishop, Rook, Knight, Queen, King } from '../pieces';
 
 export class Board {
     public element: HTMLElement;
