@@ -1,6 +1,6 @@
 export * from './Piece';
 export * from './Color';
-// export * from './Pawn';
+//export * from './Pawn';
 export * from './Bishop';
 export * from './Rook';
 export * from './Knight';

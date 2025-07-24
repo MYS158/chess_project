@@ -18,10 +18,11 @@ export class Queen extends Piece {
             { dx: -1, dy: 1 },
         ];
         for (const { dx, dy } of directions) {
-            let x = this.position.x + dx;
-            let y = this.position.y + dy;
-            while (this.isInsideBoard({ x, y })) {
-                const target: Position = { x, y };
+            const target: Position = {
+                x: this.position.x + dx,
+                y: this.position.y + dy,
+            };
+            while (this.isInsideBoard(target)) {
                 if (this.isOccupied(target, boardState)) {
                     if (this.isEnemy(target, boardState)) {
                         moves.push(target);
@@ -29,8 +30,8 @@ export class Queen extends Piece {
                     break;
                 }
                 moves.push(target);
-                x += dx;
-                y += dy;
+                target.x += dx;
+                target.y += dy;
             }
         }
         return moves;
