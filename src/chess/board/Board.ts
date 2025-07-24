@@ -6,6 +6,7 @@ import { Bishop } from '../pieces/Bishop';
 import { Rook } from '../pieces/Rook';
 import { Knight } from '../pieces/Knight';
 import { Queen } from '../pieces/Queen';
+import { King } from '../pieces/King';
 
 export class Board {
     public element: HTMLElement;
@@ -84,6 +85,8 @@ export class Board {
                 return new Knight(color, pos);
             case 'queen':
                 return new Queen(color, pos);
+            case 'king':
+                return new King(color, pos);
             default:
                 throw new Error(`Unknown piece type: ${type}`);
         }
