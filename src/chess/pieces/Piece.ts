@@ -19,7 +19,7 @@ export abstract class Piece {
 
     public abstract getRawMoves(board: BoardState): Position[];
 
-    private opponentColor(): Color {
+    protected opponentColor(): Color {
         return this.color === 'white' ? 'black' : 'white';
     }
 

@@ -42,7 +42,8 @@ export class Rook extends Piece {
                 const target: Position = { x, y };
                 moves.push(target);
                 const piece = getPieceAt(target, board);
-                if (piece !== null && piece.type !== "king") break;
+                if (piece?.type !== "king" ||
+                    piece?.type === "king" && piece.color === this.color) break;
                 x += dx;
                 y += dy;
             }
