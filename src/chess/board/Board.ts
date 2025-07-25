@@ -1,6 +1,6 @@
 import { Square } from './Square';
 import { Position } from '../Position';
-import { Piece, BoardState, PieceType, Color, Bishop, Rook, Knight, Queen, King } from '../pieces';
+import { Piece, BoardState, PieceType, Color, Pawn, Knight, Bishop, Rook, Queen, King } from '../pieces';
 
 export class Board {
     public element: HTMLElement;
@@ -71,12 +71,14 @@ export class Board {
 
     createPiece(type: PieceType, color: Color, pos: Position): Piece {
         switch (type) {
+            case 'pawn':
+                return new Pawn(color, pos);
+            case 'knight':
+                return new Knight(color, pos);
             case 'bishop':
                 return new Bishop(color, pos);
             case 'rook':
                 return new Rook(color, pos);
-            case 'knight':
-                return new Knight(color, pos);
             case 'queen':
                 return new Queen(color, pos);
             case 'king':

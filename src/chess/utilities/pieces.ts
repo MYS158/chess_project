@@ -23,6 +23,3 @@ export function isOccupiedByAlly(pos: Position, boardState: BoardState, color: C
     const piece = getPieceAt(pos, boardState);
     return piece !== null && piece.color === color;
 }
-
-
-
