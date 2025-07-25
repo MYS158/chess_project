@@ -1,6 +1,6 @@
 ﻿import { Position , positionsEqual } from '../Position';
 import { Color } from './Color';
-import { getPieceAt } from '../utilities/pieces';
+import { Move, getPieceAt } from '../utilities/pieces';
 
 export type PieceType = 'pawn' | 'rook' | 'knight' | 'bishop' | 'queen' | 'king';
 export type BoardState = Array<Piece>;
@@ -14,18 +14,32 @@ export abstract class Piece {
         public position: Position
     ) { }
 
-    public abstract getLegalMoves(board: BoardState): Position[];
+    public abstract getLegalMoves(board: BoardState, last: Move | null): Position[];
 
     protected isEnemy(pos: Position, board: BoardState): boolean {
         const p = getPieceAt(pos, board);
         return p !== null && p.color !== this.color;
     }
 
-    public move(target: Position, board: BoardState): BoardState {
-        if (!this.getLegalMoves(board).some(pos => positionsEqual(pos, target))) {
+    public move(target: Position, board: BoardState, lastMove: Move | null): BoardState {
+        if (!this.getLegalMoves(board, lastMove).some(pos => positionsEqual(pos, target))) {
             throw new Error(`Illegal move for ${this.type} to (${target.x},${target.y})`);
         }
-        const withoutCaptured = board.filter(
+        let newBoard = board;
+        if (this.type === 'pawn' && lastMove) {
+            const dir = this.color === 'white' ? -1 : 1;
+            if (
+                Math.abs(target.x - this.position.x) === 1 &&
+                target.y === this.position.y + dir &&
+                !getPieceAt(target, board)
+            ) {
+                const jumpedPos = { x: target.x, y: this.position.y };
+                newBoard = newBoard.filter(
+                    p => p.position.x !== jumpedPos.x || p.position.y !== jumpedPos.y
+                );
+            }
+        }
+        const withoutCaptured = newBoard.filter(
             p => !positionsEqual(p.position, target) || p.color === this.color
         );
         const moved = this.cloneAt(target);

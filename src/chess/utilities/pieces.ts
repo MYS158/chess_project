@@ -2,6 +2,12 @@ import { Position } from '../Position';
 import { Color } from '../pieces/Color';
 import { Piece , BoardState } from '../pieces/Piece';
 
+export interface Move {
+    piece: Piece;
+    from: Position;
+    to: Position;
+}
+
 export function isInsideBoard(pos: Position): boolean {
     return pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8;
 }

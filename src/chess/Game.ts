@@ -1,10 +1,12 @@
-﻿import { Board } from './board/Board';
+﻿import { Position, positionsEqual } from './Position';
+import { Board } from './board/Board';
 import { Piece , BoardState} from './pieces/Piece';
-
+import { Move } from './utilities/pieces';
 export class Game {
     private board!: Board;
     private pieces: BoardState = [];
     private selectedPiece: Piece | null = null;
+    private lastMove: Move | null = null;
 
     constructor(private container: HTMLElement) { }
 
@@ -62,10 +64,21 @@ export class Game {
             p => p.position.x === pos.x && p.position.y === pos.y
         );
         if (this.selectedPiece) {
-            const moves = this.selectedPiece.getLegalMoves(this.pieces);
+            const moves = this.selectedPiece.getLegalMoves(this.pieces, this.lastMove);
             const legal = moves.some(m => m.x === pos.x && m.y === pos.y);
             if (legal) {
-                this.pieces = this.selectedPiece.move(pos, this.pieces);
+                const from = { ...this.selectedPiece.position };
+                const movedPieces = this.selectedPiece.move(pos, this.pieces, this.lastMove);
+                const movedPiece = movedPieces.find(
+                    p =>
+                        positionsEqual(p.position, pos) &&
+                        p.color === this.selectedPiece!.color &&
+                        p.type === this.selectedPiece!.type
+                )!;
+                this.lastMove = { piece: movedPiece, from, to: pos };
+                this.selectedPiece = movedPiece;
+                this.pieces = movedPieces;
+                this.checkPromotion(this.selectedPiece);
             }
             this.selectedPiece = null;
         } else if (clicked) {
@@ -74,12 +87,28 @@ export class Game {
         this.draw();
     }
 
+    private checkPromotion(p: Piece) {
+        if (p.type !== 'pawn') return;
+        const { x, y } = p.position;
+        if (y !== 0 && y !== 7) return;
+        this.pieces = this.pieces.filter(
+            piece => !(piece.type === 'pawn' && piece.color === p.color
+                && piece.position.x === x && piece.position.y === y)
+        );
+        const queen = this.board.createPiece('queen', p.color, p.position);
+        this.pieces.push(queen);
+    }
+
+    private switchPlayer(): void {
+        // Perhaps implement turn logic here.
+    }
+
     private draw(): void {
         this.board.clear();
         this.board.renderPieces(this.pieces);
         if (this.selectedPiece) {
             this.board.highlight(this.selectedPiece.position, 'selected');
-            for (const m of this.selectedPiece.getLegalMoves(this.pieces)) {
+            for (const m of this.selectedPiece.getLegalMoves(this.pieces, this.lastMove)) {
                 this.board.highlight(m, 'move');
             }
         }

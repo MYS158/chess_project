@@ -1,13 +1,13 @@
-﻿// src/pieces/Pawn.ts
-import { Piece, BoardState } from './Piece';
-import { Position } from '../Position';
+﻿import { Piece, BoardState } from './Piece';
+import { Position, positionsEqual } from '../Position';
 import { isInsideBoard, isOccupied } from '../utilities/pieces';
+import { Move } from '../utilities/pieces';
 
 export class Pawn extends Piece {
     public readonly type = 'pawn';
     public readonly symbol = this.color === 'white' ? '♙' : '♟';
 
-    public getLegalMoves(board: BoardState): Position[] {
+    public getLegalMoves(board: BoardState, last: Move | null): Position[] {
         const moves: Position[] = [];
         const dir = this.color === 'white' ? -1 : 1;
         const oneForward: Position = {
@@ -36,8 +36,23 @@ export class Pawn extends Piece {
                 moves.push(diag);
             }
         }
+        if (last && last.piece.type === 'pawn') {
+            const lm = last.piece;
+            const startRank = lm.color === 'white' ? 6 : 1;
+            if (positionsEqual(last.from, { x: lm.position.x, y: startRank }) &&
+                Math.abs(last.to.y - last.from.y) === 2) {
+                if (last.to.y === this.position.y &&
+                    Math.abs(last.to.x - this.position.x) === 1) {
+                    const epCapture: Position = {
+                        x: last.to.x,
+                        y: this.position.y + dir
+                    };
+                    if (isInsideBoard(epCapture)) {
+                        moves.push(epCapture);
+                    }
+                }
+            }
+        }
         return moves;
     }
 }
-
-// En passant and promotion are not implemented in this class yet.
