@@ -1,6 +1,6 @@
 ﻿import { Position, positionsEqual } from './Position';
 import { Board } from './board/Board';
-import { Piece , BoardState} from './pieces/Piece';
+import { Piece, BoardState, PieceType } from './pieces/Piece';
 import { Move } from './utilities/pieces';
 export class Game {
     private board!: Board;
@@ -92,11 +92,40 @@ export class Game {
         const { x, y } = p.position;
         if (y !== 0 && y !== 7) return;
         this.pieces = this.pieces.filter(
-            piece => !(piece.type === 'pawn' && piece.color === p.color
-                && piece.position.x === x && piece.position.y === y)
+            piece =>
+                !(
+                    piece.type === 'pawn' &&
+                    piece.color === p.color &&
+                    piece.position.x === x &&
+                    piece.position.y === y
+                )
         );
-        const queen = this.board.createPiece('queen', p.color, p.position);
-        this.pieces.push(queen);
+        let choice: number | null = null;
+        do {
+            const input = window.prompt(
+                '¡Promoción! Elige tu pieza:\n' +
+                '1 = Reina\n' +
+                '2 = Torre\n' +
+                '3 = Alfil\n' +
+                '4 = Caballo',
+                '1'
+            );
+            if (input === null) {
+                choice = 1;
+                break;
+            }
+            choice = parseInt(input, 10);
+        } while (![1, 2, 3, 4].includes(choice));
+        let newType: PieceType;
+        switch (choice) {
+            case 2: newType = 'rook'; break;
+            case 3: newType = 'bishop'; break;
+            case 4: newType = 'knight'; break;
+            case 1:
+            default: newType = 'queen'; break;
+        }
+        const promoted = this.board.createPiece(newType, p.color, p.position);
+        this.pieces.push(promoted);
     }
 
     private switchPlayer(): void {

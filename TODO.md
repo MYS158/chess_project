@@ -51,10 +51,15 @@
 
 ## Fase: King
 - [X] Crear la clase `King`.
+- [ ] Implementar el movimiento del rey.
+- [ ] Limitar el movimiento del rey.
+- [ ] Implementar el jaque.
+- [ ] Implementar el jaque mate.
 
 ## Fase: Pawn // Miguel
-- [ ] Crear la clase `Pawn`.
-- [ ] Captura al paso.
+- [X] Crear la clase `Pawn`.
+- [X] Captura al paso.
+- [X] Coronar peones. 
 
 ## Interacción entre piezas // Soria
 - [ ] Verificar jaques del `King`
