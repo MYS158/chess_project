@@ -25,7 +25,6 @@ export class King extends Piece {
             let isAttacked = false;
             for (const piece of board) {
                 if (piece.color === this.color) continue;
-                if (piece.type === 'pawn') continue; // Without raw moves
                 const enemyMoves = piece.getRawMoves(board);
                 if (enemyMoves.some(m => m.x === x && m.y === y)) {
                      isAttacked = true;

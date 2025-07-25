@@ -55,4 +55,17 @@ export class Pawn extends Piece {
         }
         return moves;
     }
+
+    public getRawMoves(board: BoardState): Position[] {
+        const moves: Position[] = [];
+        const dir = this.color === 'white' ? -1 : 1;
+        for (const dx of [-1, 1]) {
+            const diag: Position = {
+                x: this.position.x + dx,
+                y: this.position.y + dir
+            };
+            moves.push(diag);
+        }
+        return moves;
+    }
 }
