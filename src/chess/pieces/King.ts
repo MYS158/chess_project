@@ -1,11 +1,12 @@
-﻿import { Piece } from './Piece';
+﻿import { Piece , BoardState } from './Piece';
 import { Position } from '../Position';
+import { isInsideBoard, isOccupied } from '../utilities/pieces';
 
 export class King extends Piece {
     public readonly type = 'king';
     public readonly symbol = this.color === 'white' ? '♔' : '♚';
 
-    public getLegalMoves(boardState: Piece[]): Position[] {
+    public getLegalMoves(board: BoardState): Position[] {
         const moves: Position[] = [];
         const directions: { dx: number; dy: number }[] = [
             { dx: 0, dy: 1 },
@@ -22,9 +23,9 @@ export class King extends Piece {
                 x: this.position.x + dx,
                 y: this.position.y + dy,
             };
-            if (!this.isInsideBoard(target)) continue;
-            if (this.isOccupied(target, boardState)) {
-                if (this.isEnemy(target, boardState)) {
+            if (!isInsideBoard(target)) continue;
+            if (isOccupied(target, board)) {
+                if (this.isEnemy(target, board)) {
                     moves.push(target);
                 }
             } else {

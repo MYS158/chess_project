@@ -1,9 +1,9 @@
 ﻿import { Board } from './board/Board';
-import { Piece } from './pieces/Piece';
+import { Piece , BoardState} from './pieces/Piece';
 
 export class Game {
     private board!: Board;
-    private pieces: Piece[] = [];
+    private pieces: BoardState = [];
     private selectedPiece: Piece | null = null;
 
     constructor(private container: HTMLElement) { }

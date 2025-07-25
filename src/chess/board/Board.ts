@@ -1,6 +1,6 @@
 import { Square } from './Square';
 import { Position } from '../Position';
-import { Piece, Color, Bishop, Rook, Knight, Queen, King } from '../pieces';
+import { Piece, BoardState, PieceType, Color, Bishop, Rook, Knight, Queen, King } from '../pieces';
 
 export class Board {
     public element: HTMLElement;
@@ -69,7 +69,7 @@ export class Board {
         return this.squares[pos.y][pos.x];
     }
 
-    createPiece(type: string, color: Color, pos: Position): Piece {
+    createPiece(type: PieceType, color: Color, pos: Position): Piece {
         switch (type) {
             case 'bishop':
                 return new Bishop(color, pos);
@@ -86,7 +86,7 @@ export class Board {
         }
     }
 
-    renderPieces(pieces: Array<Piece>): void {
+    renderPieces(pieces: BoardState): void {
         for (const piece of pieces) {
             const square = this.getSquare(piece.position);
             square.element.textContent = piece.symbol;
