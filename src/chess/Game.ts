@@ -103,11 +103,11 @@ export class Game {
         let choice: number | null = null;
         do {
             const input = window.prompt(
-                '¡Promoción! Elige tu pieza:\n' +
-                '1 = Reina\n' +
-                '2 = Torre\n' +
-                '3 = Alfil\n' +
-                '4 = Caballo',
+                'Promotion! Select piece:\n' +
+                '1 = Queen\n' +
+                '2 = Rook\n' +
+                '3 = Bishop\n' +
+                '4 = Knight',
                 '1'
             );
             if (input === null) {
