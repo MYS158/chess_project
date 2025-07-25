@@ -14,15 +14,25 @@ export function isOccupied(pos: Position, board: BoardState): boolean {
     return getPieceAt(pos, board) !== null;
 }
 
-export function isEnemy(pos: Position, boardState: BoardState, color: Color): boolean {
-    const piece = getPieceAt(pos, boardState);
+export function isEnemy(pos: Position, board: BoardState, color: Color): boolean {
+    const piece = getPieceAt(pos, board);
     return piece !== null && piece.color !== color;
 }
 
-export function isOccupiedByAlly(pos: Position, boardState: BoardState, color: Color): boolean {
-    const piece = getPieceAt(pos, boardState);
+export function isOccupiedByAlly(pos: Position, board: BoardState, color: Color): boolean {
+    const piece = getPieceAt(pos, board);
     return piece !== null && piece.color === color;
 }
 
+export function isAttacked(pos: Position, color: Color, board: BoardState): boolean {
+    for (const piece of board) {
+        if (piece.color !== color) continue;
+        const moves = piece.getLegalMoves(board);
+        if (moves.some(m => m.x === pos.x && m.y === pos.y)) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
