@@ -33,7 +33,7 @@ export function isOccupiedByAlly(pos: Position, board: BoardState, color: Color)
 export function isAttacked(pos: Position, color: Color, board: BoardState): boolean {
     for (const piece of board) {
         if (piece.color !== color) continue;
-        const moves = piece.getLegalMoves(board, null);
+        const moves = piece.getRawMoves(board);
         if (moves.some(m => m.x === pos.x && m.y === pos.y)) {
             return true;
         }

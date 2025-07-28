@@ -8,6 +8,7 @@ export type BoardState = Array<Piece>;
 export abstract class Piece {
     public abstract type: PieceType;
     public abstract symbol: string;
+    public hasMoved = false;
     protected static directions: { dx: number; dy: number }[] = [];
 
     constructor(
@@ -50,6 +51,22 @@ export abstract class Piece {
                 );
             }
         }
+        if (this.type === 'king' && Math.abs(target.x - this.position.x) === 2) {
+            const isKingside = target.x > this.position.x;
+            const rookX = isKingside ? 7 : 0;
+            const newRookX = isKingside ? 5 : 3;
+
+            const rookPos = { x: rookX, y: this.position.y };
+            const rook = getPieceAt(rookPos, board);
+
+            if (rook && rook.type === 'rook' && rook.color === this.color) {
+                const movedRook = rook.cloneAt({ x: newRookX, y: rookPos.y });
+                newBoard = newBoard.filter(
+                    p => !positionsEqual(p.position, rookPos)
+                );
+                newBoard.push(movedRook);
+            }
+        }
         const withoutCaptured = newBoard.filter(
             p => !positionsEqual(p.position, target) || p.color === this.color
         );
@@ -63,6 +80,7 @@ export abstract class Piece {
         copy.type  = this.type;
         copy.symbol = this.symbol;
         copy.position = { x: newPos.x, y: newPos.y };
+        copy.hasMoved = true;
         return copy;
     }
 }
