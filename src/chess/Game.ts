@@ -1,5 +1,6 @@
 ﻿import { Position, positionsEqual } from './Position';
 import { Board } from './board/Board';
+import { Color } from './pieces/Color';
 import { Piece, BoardState, PieceType } from './pieces/Piece';
 import { Move } from './utilities/pieces';
 export class Game {
@@ -7,6 +8,7 @@ export class Game {
     private pieces: BoardState = [];
     private selectedPiece: Piece | null = null;
     private lastMove: Move | null = null;
+    private currentPlayer: Color = 'white';
 
     constructor(private container: HTMLElement) { }
 
@@ -63,6 +65,9 @@ export class Game {
         const clicked = this.pieces.find(
             p => p.position.x === pos.x && p.position.y === pos.y
         );
+        if (clicked && !this.selectedPiece && clicked.color !== this.currentPlayer) {
+            return;
+        };
         if (this.selectedPiece) {
             const moves = this.selectedPiece.getLegalMoves(this.pieces, this.lastMove);
             const legal = moves.some(m => m.x === pos.x && m.y === pos.y);
@@ -79,6 +84,7 @@ export class Game {
                 this.selectedPiece = movedPiece;
                 this.pieces = movedPieces;
                 this.checkPromotion(this.selectedPiece);
+                this.switchPlayer();
             }
             this.selectedPiece = null;
         } else if (clicked) {
@@ -129,7 +135,7 @@ export class Game {
     }
 
     private switchPlayer(): void {
-        // Perhaps implement turn logic here.
+        this.currentPlayer = this.currentPlayer === 'white' ? 'black' : 'white';
     }
 
     private draw(): void {
