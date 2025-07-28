@@ -8,7 +8,9 @@ export class Game {
     private pieces: BoardState = [];
     private selectedPiece: Piece | null = null;
     private lastMove: Move | null = null;
+    private previousPlayer: Color | null = null;
     private currentPlayer: Color = 'white';
+    private turn: number = 1;
 
     constructor(private container: HTMLElement) { }
 
@@ -91,6 +93,7 @@ export class Game {
             this.selectedPiece = clicked;
         }
         this.draw();
+        console.log(`Turn: ${this.turn}, Player: ${this.currentPlayer}`);
     }
 
     private checkPromotion(p: Piece) {
@@ -135,7 +138,11 @@ export class Game {
     }
 
     private switchPlayer(): void {
+        this.previousPlayer = this.currentPlayer;
         this.currentPlayer = this.currentPlayer === 'white' ? 'black' : 'white';
+        if (this.previousPlayer == 'black' && this.currentPlayer == 'white') {
+            this.turn++;
+        }
     }
 
     private draw(): void {
