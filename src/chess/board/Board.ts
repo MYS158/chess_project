@@ -50,6 +50,7 @@ export class Board {
                 element.classList.remove(
                     'selected-highlight',
                     'move-highlight',
+                    'capture-highlight',
                     'piece',
                     'white',
                     'black'
@@ -58,11 +59,15 @@ export class Board {
         }
     }
 
-    highlight(pos: Position, type: 'selected' | 'move' = 'selected'): void {
+    highlight(pos: Position, type: 'selected' | 'move' | 'capture'): void {
         const square = this.squares[pos.y][pos.x];
-        square.element.classList.add(
-            type === 'selected' ? 'selected-highlight' : 'move-highlight'
-        );
+        if (type === 'selected') {
+            square.element.classList.add('selected-highlight');
+        } else if (type === 'move') {
+            square.element.classList.add('move-highlight');
+        } else if (type === 'capture') {
+            square.element.classList.add('capture-highlight');
+        }
     }
 
     getSquare(pos: Position): Square {

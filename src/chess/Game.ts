@@ -145,13 +145,46 @@ export class Game {
         }
     }
 
+    private logNotation(): void {
+        const last = this.lastMove;
+        if (!last) return;
+        const pieceSymbol = last.piece.symbol;
+        const from = last.from;
+        const to = last.to;
+        const notation = `${pieceSymbol} from ${from.x},${from.y} to ${to.x},${to.y}`;
+        console.log(notation);
+    }
+
     private draw(): void {
         this.board.clear();
         this.board.renderPieces(this.pieces);
-        if (this.selectedPiece) {
-            this.board.highlight(this.selectedPiece.position, 'selected');
-            for (const m of this.selectedPiece.getLegalMoves(this.pieces, this.lastMove)) {
-                this.board.highlight(m, 'move');
+        if (!this.selectedPiece) return;
+        this.board.highlight(this.selectedPiece.position, 'selected');
+        const epSquares: Position[] = [];
+        if (
+            this.selectedPiece.type === 'pawn' &&
+            this.lastMove &&
+            this.lastMove.piece.type === 'pawn' &&
+            Math.abs(this.lastMove.to.y - this.lastMove.from.y) === 2 &&
+            this.selectedPiece.position.y === this.lastMove.to.y &&
+            Math.abs(this.selectedPiece.position.x - this.lastMove.to.x) === 1
+        ) {
+            const dir = this.selectedPiece.color === 'white' ? -1 : 1;
+            const epSquare: Position = {
+                x: this.lastMove.to.x,
+                y: this.selectedPiece.position.y + dir
+            };
+            epSquares.push(epSquare);
+        }
+        const moves = this.selectedPiece.getLegalMoves(this.pieces, this.lastMove);
+        for (const m of moves) {
+            const targetPiece = this.pieces.find(p => positionsEqual(p.position, m));
+            if (targetPiece) this.board.highlight(m, 'capture');
+            else this.board.highlight(m, 'move');
+            const isEp = epSquares.some(p => positionsEqual(p, m));
+            if (isEp) {
+                this.board.highlight(m, 'capture');
+                continue;
             }
         }
     }
