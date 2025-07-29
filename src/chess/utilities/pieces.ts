@@ -41,4 +41,9 @@ export function isAttacked(pos: Position, color: Color, board: BoardState): bool
     return false;
 }
 
+export function isInCheck(board: BoardState, color: Color): boolean {
+    const king = board.find(p => p.type === 'king' && p.color === color);
+    if (!king) throw new Error('No king found on board');
+    return isAttacked(king.position, king.opponentColor(), board);
+}
 

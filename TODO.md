@@ -51,8 +51,8 @@
 
 ## Fase: King
 - [X] Crear la clase `King`.
-- [ ] Implementar el movimiento del rey.
-- [ ] Limitar el movimiento del rey.
+- [X] Implementar el movimiento del rey.
+- [X] Limitar el movimiento del rey.
 - [ ] Implementar el jaque.
 - [ ] Implementar el jaque mate.
 
@@ -62,5 +62,5 @@
 - [X] Coronar peones. 
 
 ## Interacción entre piezas // Soria
-- [ ] Verificar jaques del `King`
-- [ ] Crear interacción entre `King` y `Rook`.
+- [X] Verificar jaques del `King`
+- [X] Crear interacción entre `King` y `Rook`.
