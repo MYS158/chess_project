@@ -30,6 +30,10 @@ export function isOccupiedByAlly(pos: Position, board: BoardState, color: Color)
     return piece !== null && piece.color === color;
 }
 
+export function getOpponentColor(color: Color): Color {
+    return color === 'white' ? 'black' : 'white';
+}
+
 export function isAttacked(pos: Position, color: Color, board: BoardState): boolean {
     for (const piece of board) {
         if (piece.color !== color) continue;

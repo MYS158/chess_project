@@ -1,6 +1,6 @@
 ﻿import { Position , positionsEqual } from '../Position';
 import { Color } from './Color';
-import { Move, getPieceAt, isAttacked } from '../utilities/pieces';
+import { Move, getPieceAt, isAttacked, getOpponentColor } from '../utilities/pieces';
 
 export type PieceType = 'pawn' | 'rook' | 'knight' | 'bishop' | 'queen' | 'king';
 export type BoardState = Array<Piece>;
@@ -21,7 +21,7 @@ export abstract class Piece {
     public abstract getRawMoves(board: BoardState): Position[];
 
     public opponentColor(): Color {
-        return this.color === 'white' ? 'black' : 'white';
+        return getOpponentColor(this.color);
     }
 
     protected isEnemy(pos: Position, board: BoardState): boolean {
@@ -82,5 +82,11 @@ export abstract class Piece {
         copy.position = { x: newPos.x, y: newPos.y };
         copy.hasMoved = true;
         return copy;
+    }
+
+    public simulateMove(target: Position, board: BoardState): BoardState {
+        const withoutCaptured = board.filter(p => !positionsEqual(p.position, target));
+        const clone = this.cloneAt(target);
+        return withoutCaptured.filter(p => p !== this).concat(clone);
     }
 }
