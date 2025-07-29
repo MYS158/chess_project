@@ -65,14 +65,14 @@ export class Game {
         if (!square) return;
         const pos = square.position;
         const clicked = this.pieces.find(
-            p => p.position.x === pos.x && p.position.y === pos.y
+            p => positionsEqual(p.position, pos)
         );
         if (clicked && !this.selectedPiece && clicked.color !== this.currentPlayer) {
             return;
         };
         if (this.selectedPiece) {
             const moves = this.selectedPiece.getLegalMoves(this.pieces, this.lastMove);
-            const legal = moves.some(m => m.x === pos.x && m.y === pos.y);
+            const legal = moves.some(m => positionsEqual(m, pos));
             if (legal) {
                 const from = { ...this.selectedPiece.position };
                 const movedPieces = this.selectedPiece.move(pos, this.pieces, this.lastMove);
