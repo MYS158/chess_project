@@ -1,4 +1,5 @@
-body {
+﻿body {
+    align-content: center;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,17 +10,60 @@ body {
 }
 
 .title {
+    grid-area: title;
     text-align: center;
-    margin-top: 32px;
+    margin: 0;
+    padding: 16px 0;
     font-size: 2rem;
     color: #fff;
     font-family: Arial, sans-serif;
 }
 
 #app {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    width: 100%;
+    max-width: 1000px;
     height: 100vh;
-    margin-top: 24px;
+    margin: 0;
+    padding: 24px;
+    box-sizing: border-box;
+    grid-template-columns: 300px 480px;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "title      title"
+        "description game"
+        "footer     footer";
+    gap: 24px;
+}
+
+#description {
+    grid-area: description;
+    max-width: 300px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #eee;
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+#game {
+    grid-area: game;
+    width: 480px;
+    height: 480px;
+    background: #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+    grid-area: footer;
+    font-size: 0.875rem;
+    color: #888;
+    text-align: center;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
