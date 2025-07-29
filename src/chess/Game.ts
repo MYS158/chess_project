@@ -2,7 +2,7 @@
 import { Board } from './board/Board';
 import { Color } from './pieces/Color';
 import { Piece, BoardState, PieceType } from './pieces/Piece';
-import { Move } from './utilities/pieces';
+import { Move, isInCheck} from './utilities/pieces';
 export class Game {
     private board!: Board;
     private pieces: BoardState = [];
@@ -71,7 +71,10 @@ export class Game {
             return;
         };
         if (this.selectedPiece) {
-            const moves = this.selectedPiece.getLegalMoves(this.pieces, this.lastMove);
+            const moves = this.selectedPiece.getLegalMoves(this.pieces, this.lastMove).filter(move => {
+                const simulated = this.selectedPiece!.simulateMove(move, this.pieces);
+                return !isInCheck(simulated, this.selectedPiece!.color);
+            });
             const legal = moves.some(m => positionsEqual(m, pos));
             if (legal) {
                 const from = { ...this.selectedPiece.position };
@@ -176,7 +179,10 @@ export class Game {
             };
             epSquares.push(epSquare);
         }
-        const moves = this.selectedPiece.getLegalMoves(this.pieces, this.lastMove);
+        const moves = this.selectedPiece.getLegalMoves(this.pieces, this.lastMove).filter(move => {
+            const simulated = this.selectedPiece!.simulateMove(move, this.pieces);
+            return !isInCheck(simulated, this.selectedPiece!.color);
+        });
         for (const m of moves) {
             const targetPiece = this.pieces.find(p => positionsEqual(p.position, m));
             if (targetPiece) this.board.highlight(m, 'capture');
