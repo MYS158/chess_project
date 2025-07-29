@@ -2,7 +2,8 @@
 import { Board } from './board/Board';
 import { Color } from './pieces/Color';
 import { Piece, BoardState, PieceType } from './pieces/Piece';
-import { Move, isInCheck} from './utilities/pieces';
+import { Move, isInCheck, getOpponentColor } from './utilities/pieces';
+
 export class Game {
     private board!: Board;
     private pieces: BoardState = [];
@@ -108,8 +109,7 @@ export class Game {
                 !(
                     piece.type === 'pawn' &&
                     piece.color === p.color &&
-                    piece.position.x === x &&
-                    piece.position.y === y
+                    positionsEqual(piece.position, {x, y})
                 )
         );
         let choice: number | null = null;
@@ -142,7 +142,7 @@ export class Game {
 
     private switchPlayer(): void {
         this.previousPlayer = this.currentPlayer;
-        this.currentPlayer = this.currentPlayer === 'white' ? 'black' : 'white';
+        this.currentPlayer = getOpponentColor(this.currentPlayer);
         if (this.previousPlayer == 'black' && this.currentPlayer == 'white') {
             this.turn++;
         }
