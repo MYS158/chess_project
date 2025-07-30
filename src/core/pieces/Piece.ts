@@ -16,8 +16,6 @@ export abstract class Piece {
 
     public abstract getLegalMoves(board: Board, last: Move | null): Position[];
 
-    public abstract getPossibleCaptures(board: Board, last: Move | null): Position[];
-
     public abstract getRawMoves(board: Board): Position[];
 
     public opponentColor(): Color {
@@ -32,5 +30,4 @@ export abstract class Piece {
     protected isAttacked(pos: Position, board: Board): boolean {
         return isAttacked(pos, this.opponentColor(), board);
     }
-
 }

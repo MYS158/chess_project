@@ -6,7 +6,7 @@ import { Color } from "./pieces/pieceTypes";
 export class Game {
     private board: Board;
     private history: Move[] = [];
-    public currentPlayer: string = "white";
+    public currentPlayer: Color = "white";
 
     constructor(initial: Board) {
         this.board = initial.clone();
