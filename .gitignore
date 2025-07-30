@@ -416,3 +416,8 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Ignore dist carpet and compiled files
+dist/
+*.js
+*.js.map
