@@ -27,6 +27,9 @@ export class InputHandler {
             } else if (this.selected) {
                 this.renderer.highlight(pos, 'move');
                 this.handleClick(pos);
+            } else {
+                this.renderer.highlight(pos, 'capture');
+                this.handleClick(pos);
             }
         }
     }

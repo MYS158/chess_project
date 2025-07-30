@@ -24,6 +24,6 @@ export class Game {
     }
 
     isCheck(color: Color): boolean {
-        return isInCheck(this.board.state, color);
+        return isInCheck(this.board, color);
     }
 }
