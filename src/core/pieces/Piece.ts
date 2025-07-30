@@ -4,7 +4,7 @@ import { isAttacked, getOpponentColor } from '../utils/attackDetection';
 import { Board } from '../board';
 
 export abstract class Piece {
-    public abstract type: Category;
+    public abstract category: Category;
     public abstract symbol: string;
     public hasMoved = false;
     protected static directions: { dx: number; dy: number }[] = [];
