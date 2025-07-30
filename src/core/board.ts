@@ -4,10 +4,14 @@ import { Piece } from "./pieces/Piece";
 export type BoardState = Array<Piece>;
 
 export class Board {
-    public state: BoardState;
+    private state: BoardState;
 
     constructor(state: BoardState = []) {
         this.state = [...state];
+    }
+
+    getState() : BoardState {
+        return this.state;
     }
 
     getPiece(pos: Position): Piece | null {
