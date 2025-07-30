@@ -1,6 +1,7 @@
 import { Board } from "./board";
 import { Move, Position } from "./move";
 import { isInCheck, getOpponentColor } from "./utils/attackDetection";
+import { Color } from "./pieces/pieceTypes";
 
 export class Game {
     private board: Board;
@@ -22,7 +23,7 @@ export class Game {
         return this.board.clone();
     }
 
-    isCheck(color: string): boolean {
-        return isInCheck(this.board.state, color as any);
+    isCheck(color: Color): boolean {
+        return isInCheck(this.board.state, color);
     }
 }
