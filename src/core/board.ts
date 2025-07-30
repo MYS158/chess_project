@@ -11,16 +11,16 @@ export class Board {
     }
 
     getPiece(pos: Position): Piece | null {
-        return this.state.find(p => p.position.x === pos.x && p.position.y === pos.y) || null;
+        return this.state.find(p => p.position.equals(pos)) || null;
     }
 
     setPiece(piece: Piece): void {
-        this.state = this.state.filter(p => p.position.x !== piece.position.x || p.position.y !== piece.position.y);
+        this.state = this.state.filter(p => !p.position.equals(piece.position));
         this.state.push(piece);
     }
 
     removePiece(pos: Position): void {
-        this.state = this.state.filter(p => p.position.x !== pos.x || p.position.y !== pos.y);
+        this.state = this.state.filter(p => p.position.equals(pos));
     }
 
     movePiece(move: Move): void {
