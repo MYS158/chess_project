@@ -32,7 +32,7 @@ export class Renderer {
             sq.textContent = '';
             sq.classList.remove('selected', 'move', 'capture');
         }
-        for (const p of board.state) {
+        for (const p of board.getState()) {
             const sq = this.squareEls[p.position.y][p.position.x];
             sq.textContent = p.symbol;
             sq.classList.add('piece', p.color);
