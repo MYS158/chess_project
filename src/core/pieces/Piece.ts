@@ -30,4 +30,14 @@ export abstract class Piece {
     protected isAttacked(pos: Position, board: Board): boolean {
         return isAttacked(pos, this.opponentColor(), board);
     }
+
+    public clone(): Piece {
+        const piece = Object.create(Object.getPrototypeOf(this));
+        piece.color = this.color;
+        piece.position = new Position(this.position.x, this.position.y);
+        piece.hasMoved = this.hasMoved;
+        piece.category = this.category;
+        piece.symbol = this.symbol;
+        return piece;
+    }
 }

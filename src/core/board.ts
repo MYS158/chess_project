@@ -31,7 +31,7 @@ export class Board {
         this.removePiece(move.to);
         const piece = this.getPiece(move.from);
         if (!piece) throw new Error("No piece at source");
-        piece.position = { ...move.to };
+        piece.position = move.to;
         piece.hasMoved = true;
     }
 
