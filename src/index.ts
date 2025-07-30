@@ -1,5 +1,5 @@
-import '../ui/styles/app-style.css';
-import '../ui/styles/game-style.css';
+import './ui/styles/app-style.css';
+import './ui/styles/game-style.css';
 import { Board, BoardState } from './core/board';
 import { Game } from './core/Game';
 import { Renderer } from './ui/Renderer';
