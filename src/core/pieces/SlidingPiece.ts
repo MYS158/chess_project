@@ -12,7 +12,7 @@ export abstract class SlidingPiece extends Piece {
         protected directions: Array<{ dx: number, dy: number }>
     ) { super(color, position); }
 
-    public getLegalMoves(board: Board, last: Move | null): Position[] {
+    public getLegalMoves(board: Board): Position[] {
         const moves: Position[] = [];
         for (const { dx, dy } of this.directions) {
             let pos = new Position(this.position.x + dx, this.position.y + dy);

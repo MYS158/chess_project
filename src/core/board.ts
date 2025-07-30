@@ -18,6 +18,10 @@ export class Board {
         return this.state.find(p => p.position.equals(pos)) || null;
     }
 
+    isOccupied(pos: Position): boolean {
+        return this.getPiece(pos) !== null;
+    }
+
     setPiece(piece: Piece): void {
         this.state = this.state.filter(p => !p.position.equals(piece.position));
         this.state.push(piece);
