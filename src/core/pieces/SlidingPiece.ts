@@ -17,9 +17,9 @@ export abstract class SlidingPiece extends Piece {
         for (const { dx, dy } of this.directions) {
             let pos = new Position(this.position.x + dx, this.position.y + dy);
             while (isInsideBoard(pos)) {
-                const occ = board.getPiece(pos);
-                if (occ) {
-                    if (occ.color !== this.color) moves.push(pos);
+                const target = board.getPiece(pos);
+                if (target) {
+                    if (this.isEnemy(pos, board)) moves.push(pos);
                     break;
                 }
                 moves.push(pos);
@@ -30,6 +30,18 @@ export abstract class SlidingPiece extends Piece {
     }
 
     public getRawMoves(board: Board): Position[] {
-        return this.getLegalMoves(board, null);
-    }
+        const moves: Position[] = [];
+        for (const { dx, dy } of this.directions) {
+            let pos = new Position(this.position.x + dx, this.position.y + dy);
+            while (isInsideBoard(pos)) {
+                moves.push(pos);
+                const target = board.getPiece(pos);
+                if (target !== null && (target.category !== 'king' || target.color === this.color)) {
+                    break;
+                }
+                pos = new Position(pos.x + dx, pos.y + dy);
+            }
+        }
+        return moves;
+    }       
 }

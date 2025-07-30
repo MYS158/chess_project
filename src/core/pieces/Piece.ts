@@ -22,7 +22,7 @@ export abstract class Piece {
         return getOpponentColor(this.color);
     }
 
-    protected isEnemy(pos: Position, board: Board): boolean {
+    public isEnemy(pos: Position, board: Board): boolean {
         const p = board.getPiece(pos);
         return p !== null && p.color !== this.color;
     }
