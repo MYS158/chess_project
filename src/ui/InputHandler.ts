@@ -15,13 +15,20 @@ export class InputHandler {
     }
 
     private addListeners() {
-        (this.renderer as any).container.addEventListener('click', e => {
-            const target = e.target as HTMLElement;
-            const x = parseInt(target.dataset.x || '', 10);
-            const y = parseInt(target.dataset.y || '', 10);
-            if (isNaN(x) || isNaN(y)) return;
-            this.handleClick(new Position(x, y));
-        });
+        onclick = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+            if (!target.classList.contains('square')) return;
+            const x = parseInt(target.dataset.x || '0');
+            const y = parseInt(target.dataset.y || '0');
+            const pos: Position = new Position(x, y);
+            if (this.game.getBoard().getPiece(pos)) {
+                this.renderer.highlight(pos, 'selected');
+                this.handleClick(pos);
+            } else if (this.selected) {
+                this.renderer.highlight(pos, 'move');
+                this.handleClick(pos);
+            }
+        }
     }
 
     private handleClick(pos: Position) {
