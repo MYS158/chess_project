@@ -1,0 +1,28 @@
+import { Board } from "./board";
+import { Move, Position } from "./move";
+import { isInCheck, getOpponentColor } from "./utils/attackDetection";
+
+export class Game {
+    private board: Board;
+    private history: Move[] = [];
+    public currentPlayer: string = "white";
+
+    constructor(initial: Board) {
+        this.board = initial.clone();
+    }
+
+    play(move: Move): void {
+        // TODO: validate legality, check, promotion, etc.
+        this.board.movePiece(move);
+        this.history.push(move);
+        this.currentPlayer = getOpponentColor(this.currentPlayer);
+    }
+
+    getBoard(): Board {
+        return this.board.clone();
+    }
+
+    isCheck(color: string): boolean {
+        return isInCheck(this.board.state, color as any);
+    }
+}
