@@ -6,8 +6,6 @@ import { Board } from "../board";
 import { Move } from "../move";
 
 export abstract class SlidingPiece extends Piece {
-    protected static directions: { dx: number, dy: number }[] = [];
-
     constructor(
         color: Color,
         position: Position
