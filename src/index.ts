@@ -16,7 +16,14 @@ const container = document.getElementById('game');
 if (!container) throw new Error('#game not found');
 
 const initialBoard: BoardState = [
-    new King('white', new Position(0, 0)),
+    new King('white', new Position(4, 7)),
+    new King('black', new Position(4, 0)),
+    new Queen('white', new Position(3, 7)),
+    new Queen('black', new Position(3, 0)),
+    new Rook('white', new Position(0, 7)),
+    new Rook('white', new Position(7, 7)),
+    new Rook('black', new Position(0, 0)),
+    new Rook('black', new Position(7, 0))
 ]
 const board = new Board(initialBoard);
 const game = new Game(board);

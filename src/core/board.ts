@@ -28,7 +28,7 @@ export class Board {
     }
 
     removePiece(pos: Position): void {
-        this.state = this.state.filter(p => p.position.equals(pos));
+        this.state = this.state.filter(p => !p.position.equals(pos));
     }
 
     movePiece(move: Move): void {
