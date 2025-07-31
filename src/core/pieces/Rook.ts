@@ -3,7 +3,7 @@ import { Position } from "../move";
 import { Color, Category } from "./pieceTypes";
 
 export class Rook extends SlidingPiece {
-    static directions = [
+    public static override directions = [
         { dx: 1, dy: 0 }, { dx: -1, dy: 0 }, { dx: 0, dy: 1 }, { dx: 0, dy: -1 }
     ];
     public category: Category = 'rook';
