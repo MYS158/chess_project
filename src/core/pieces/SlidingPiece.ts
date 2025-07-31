@@ -6,15 +6,17 @@ import { Board } from "../board";
 import { Move } from "../move";
 
 export abstract class SlidingPiece extends Piece {
+    protected static directions: { dx: number, dy: number }[] = [];
+
     constructor(
         color: Color,
-        position: Position,
-        protected directions: Array<{ dx: number, dy: number }>
+        position: Position
     ) { super(color, position); }
 
     public getLegalMoves(board: Board): Position[] {
         const moves: Position[] = [];
-        for (const { dx, dy } of this.directions) {
+        const directions = (this.constructor as typeof SlidingPiece).directions;
+        for (const { dx, dy } of directions) {
             let pos = new Position(this.position.x + dx, this.position.y + dy);
             while (isInsideBoard(pos)) {
                 const occ = board.getPiece(pos);
@@ -31,7 +33,8 @@ export abstract class SlidingPiece extends Piece {
 
     public getRawMoves(board: Board): Position[] {
         const moves: Position[] = [];
-        for (const { dx, dy } of this.directions) {
+        const directions = (this.constructor as typeof SlidingPiece).directions;
+        for (const { dx, dy } of directions) {
             let pos = new Position(this.position.x + dx, this.position.y + dy);
             while (isInsideBoard(pos)) {
                 moves.push(pos);
