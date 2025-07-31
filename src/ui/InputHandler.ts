@@ -1,5 +1,5 @@
 import { Renderer } from './Renderer';
-import { Game } from '../core/game';
+import { Game } from '../core/Game';
 import { Position } from '../core/move';
 import type { Move } from '../core/move';
 

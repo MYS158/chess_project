@@ -23,7 +23,31 @@ const initialBoard: BoardState = [
     new Rook('white', new Position(0, 7)),
     new Rook('white', new Position(7, 7)),
     new Rook('black', new Position(0, 0)),
-    new Rook('black', new Position(7, 0))
+    new Rook('black', new Position(7, 0)),
+    new Bishop('white', new Position(2, 7)),
+    new Bishop('white', new Position(5, 7)),
+    new Bishop('black', new Position(2, 0)),
+    new Bishop('black', new Position(5, 0)),
+    new Knight('white', new Position(1, 7)),
+    new Knight('white', new Position(6, 7)),
+    new Knight('black', new Position(1, 0)),
+    new Knight('black', new Position(6, 0)),
+    new Pawn('white', new Position(0, 6)),
+    new Pawn('white', new Position(1, 6)),
+    new Pawn('white', new Position(2, 6)),
+    new Pawn('white', new Position(3, 6)),
+    new Pawn('white', new Position(4, 6)),
+    new Pawn('white', new Position(5, 6)),
+    new Pawn('white', new Position(6, 6)),
+    new Pawn('white', new Position(7, 6)),
+    new Pawn('black', new Position(0, 1)),
+    new Pawn('black', new Position(1, 1)),
+    new Pawn('black', new Position(2, 1)),
+    new Pawn('black', new Position(3, 1)),
+    new Pawn('black', new Position(4, 1)),
+    new Pawn('black', new Position(5, 1)),
+    new Pawn('black', new Position(6, 1)),
+    new Pawn('black', new Position(7, 1))
 ]
 const board = new Board(initialBoard);
 const game = new Game(board);
