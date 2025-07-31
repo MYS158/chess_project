@@ -13,13 +13,14 @@ export class Knight extends Piece {
     ];
 
     public getLegalMoves(board: Board): Position[] {
-        return this.directions
-            .map(s => new Position(this.position.x + s.dx, this.position.y + s.dy))
-            .filter(p => {
-                if (!isInsideBoard(p)) return false;
-                const found = board.getState().find((q: Piece) => q.position.equals(p));
-                return !found || found.color !== this.color;
-            });
+        const moves: Position[] = [];
+        for (const { dx, dy } of this.directions) {
+            const pos = new Position(this.position.x + dx, this.position.y + dy);
+            if (!isInsideBoard(pos)) continue;
+            const occ = board.getPiece(pos);
+            if (!occ || occ.color !== this.color) moves.push(pos);
+        }
+        return moves;
     }
 
     public getRawMoves(board: Board): Position[] {
