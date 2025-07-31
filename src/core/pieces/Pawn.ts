@@ -1,7 +1,7 @@
 ﻿import { Piece } from './Piece';
 import { Position, Move } from '../move';
 import { isInsideBoard } from '../utils/isInsideBoard';
-import { Color, Category } from './pieceTypes';
+import { Category } from './pieceTypes';
 import { Board } from '../board';
 
 export class Pawn extends Piece {
@@ -29,7 +29,7 @@ export class Pawn extends Piece {
                 moves.push(cap);
             }
         }
-        if (lastMove && lastMove.piece.type === 'pawn' && Math.abs(lastMove.from.y - lastMove.to.y) === 2) {
+        if (lastMove && lastMove.piece.category === 'pawn' && Math.abs(lastMove.from.y - lastMove.to.y) === 2) {
             const epY = this.position.y;
             const epX = lastMove.to.x;
             if (Math.abs(this.position.x - epX) === 1 && epY === (this.color === 'white' ? 3 : 4)) {
