@@ -12,12 +12,10 @@ export class InputHandler {
         this.renderer = renderer;
         this.game = game;
         this.addListeners();
-        // initial highlight or render
         this.renderer.render(this.game.getBoard());
     }
 
     private addListeners() {
-        // Listen on the renderer's container element
         this.renderer.getContainer().addEventListener('click', (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             if (!target.classList.contains('square')) return;
@@ -25,27 +23,25 @@ export class InputHandler {
             const y = parseInt(target.dataset.y ?? '', 10);
             if (isNaN(x) || isNaN(y)) return;
             const pos = new Position(x, y);
-
-            // If selecting a piece
             const piece = this.game.getBoard().getPiece(pos);
             if (piece && piece.color === this.game.currentPlayer) {
                 this.selected = pos;
                 this.renderer.render(this.game.getBoard());
                 this.renderer.highlight(pos, 'selected');
-
-                // highlight legal moves
-                const legal = piece.getLegalMoves(this.game.getBoard(), /* lastMove */ undefined)
-                    .filter(m => !this.game.isCheck(piece.color)); // also filter checks
+                const legal = piece.getLegalMoves(this.game.getBoard(), this.game.getLastMove())
+                    .filter(m => !this.game.isCheck(piece.color));
                 for (const m of legal) {
                     const targetPiece = this.game.getBoard().getPiece(m);
                     this.renderer.highlight(m, targetPiece ? 'capture' : 'move');
                 }
-            }
-            // If destination selection
-            else if (this.selected) {
+            } else if (this.selected) {
                 const from = this.selected;
                 const movingPiece = this.game.getBoard().getPiece(from);
                 if (!movingPiece) return;
+                const legalMoves = movingPiece.getLegalMoves(this.game.getBoard(), this.game.getLastMove())
+                    .filter(m => !this.game.isCheck(movingPiece.color));
+                const isLegal = legalMoves.some(m => m.equals(pos));
+                if (!isLegal) return;
                 const move: Move = { piece: movingPiece, from, to: pos };
                 try { this.game.play(move); } catch { }
                 this.selected = null;

@@ -19,6 +19,11 @@ export class Game {
         this.currentPlayer = getOpponentColor(this.currentPlayer);
     }
 
+    getLastMove(): Move | null {
+        if (this.history.length === 0) return null;
+        return this.history[this.history.length - 1];
+    }
+
     getBoard(): Board {
         return this.board.clone();
     }
