@@ -22,9 +22,8 @@ export abstract class Piece {
         return getOpponentColor(this.color);
     }
 
-    public isEnemy(pos: Position, board: Board): boolean {
-        const p = board.getPiece(pos);
-        return p !== null && p.color !== this.color;
+    public isEnemy(other: Piece): boolean {
+        return this.color !== other.color;
     }
 
     protected isAttacked(pos: Position, board: Board): boolean {

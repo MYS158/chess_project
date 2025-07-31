@@ -18,7 +18,7 @@ export class Knight extends Piece {
             const pos = new Position(this.position.x + dx, this.position.y + dy);
             if (!isInsideBoard(pos)) continue;
             const occ = board.getPiece(pos);
-            if (!occ || occ.color !== this.color) moves.push(pos);
+            if (!occ || this.isEnemy(occ)) moves.push(pos);
         }
         return moves;
     }

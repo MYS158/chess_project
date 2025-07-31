@@ -26,9 +26,8 @@ export class King extends Piece {
             const target = new Position(this.position.x + dx, this.position.y + dy);
             if (!isInsideBoard(target) || this.isAttacked(target, board)) continue;
             if (board.isOccupied(target)) {
-                if (this.isEnemy(target, board)) {
-                    moves.push(target);
-                }
+                const targetPiece = board.getPiece(target);
+                if (targetPiece && this.isEnemy(targetPiece)) moves.push(target);
             } else {
                 moves.push(target);
             }

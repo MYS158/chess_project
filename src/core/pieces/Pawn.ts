@@ -25,7 +25,7 @@ export class Pawn extends Piece {
         for (const dx of [-1, 1]) {
             const cap = new Position(this.position.x + dx, this.position.y + dir);
             const occ = board.getState().find((p: any) => p.position.equals(cap));
-            if (isInsideBoard(cap) && occ && occ.color !== this.color) {
+            if (isInsideBoard(cap) && occ && this.isEnemy(occ)) {
                 moves.push(cap);
             }
         }

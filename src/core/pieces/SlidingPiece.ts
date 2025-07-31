@@ -19,7 +19,7 @@ export abstract class SlidingPiece extends Piece {
             while (isInsideBoard(pos)) {
                 const occ = board.getPiece(pos);
                 if (occ) {
-                    if (occ.color !== this.color) moves.push(pos);
+                    if (this.isEnemy(occ)) moves.push(pos);
                     break;
                 }
                 moves.push(pos);
@@ -36,7 +36,7 @@ export abstract class SlidingPiece extends Piece {
             while (isInsideBoard(pos)) {
                 moves.push(pos);
                 const target = board.getPiece(pos);
-                if (target !== null && (target.category !== 'king' || target.color === this.color)) {
+                if (target !== null && (target.category !== 'king' || !this.isEnemy(target))) {
                     break;
                 }
                 pos = new Position(pos.x + dx, pos.y + dy);
