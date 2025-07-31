@@ -27,6 +27,10 @@ export class Renderer {
         }
     }
 
+    public getContainer(): HTMLElement {
+        return this.container;
+    }
+
     public render(board: Board) {
         for (const row of this.squareEls) for (const sq of row) {
             sq.textContent = '';

@@ -18,7 +18,7 @@ export class InputHandler {
 
     private addListeners() {
         // Listen on the renderer's container element
-        (this.renderer as any).container.addEventListener('click', (e: MouseEvent) => {
+        this.renderer.getContainer().addEventListener('click', (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             if (!target.classList.contains('square')) return;
             const x = parseInt(target.dataset.x ?? '', 10);
