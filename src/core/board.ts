@@ -1,5 +1,7 @@
 import { Position, Move } from "./move";
 import { Piece } from "./pieces/Piece";
+import { isAttackedKing } from "./utils/attackDetection";
+import { Color } from "./pieces/pieceTypes";
 
 export type BoardState = Array<Piece>;
 
@@ -37,6 +39,17 @@ export class Board {
         if (!piece) throw new Error("No piece at source");
         piece.position = move.to;
         piece.hasMoved = true;
+    }
+
+    simulateMove(move: Move): Board {
+        const newBoard = this.clone();
+        newBoard.movePiece(move);
+        return newBoard;
+    }
+
+    isValidMove(move: Move): boolean {
+        const simulatedBoard = this.simulateMove(move);
+        return !isAttackedKing(move.piece.color, simulatedBoard);
     }
 
     clone(): Board {
