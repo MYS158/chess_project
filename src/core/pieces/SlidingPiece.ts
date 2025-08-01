@@ -36,8 +36,8 @@ export abstract class SlidingPiece extends Piece {
             let pos = new Position(this.position.x + dx, this.position.y + dy);
             while (isInsideBoard(pos)) {
                 moves.push(pos);
-                const target = board.getPiece(pos);
-                if (target !== null && (target.category !== 'king' || !this.isEnemy(target))) {
+                const occ = board.getPiece(pos);
+                if (occ !== null && (occ.category !== 'king' || !this.isEnemy(occ))) {
                     break;
                 }
                 pos = new Position(pos.x + dx, pos.y + dy);
