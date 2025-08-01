@@ -2,6 +2,8 @@ import { Renderer } from './Renderer';
 import { Game } from '../core/Game';
 import { Position } from '../core/move';
 import type { Move } from '../core/move';
+import { isEnPassantCapture } from '../core/utils/enPassant';
+import { getOpponentColor } from '../core/utils/attackDetection';
 
 export class InputHandler {
     private renderer: Renderer;
@@ -34,12 +36,11 @@ export class InputHandler {
                 this.selected = pos;
                 this.renderer.render(board);
                 this.renderer.highlight(pos, 'selected');
-
-                // highlight legal moves using Board instance
                 const legalMoves = piece.getLegalMoves(board, lastMove);
                 for (const m of legalMoves) {
                     const dest = board.getPiece(m);
-                    this.renderer.highlight(m, dest ? 'capture' : 'move');
+                    const isEP = piece.category === 'pawn' && lastMove && isEnPassantCapture(m, getOpponentColor(piece.color));
+                    this.renderer.highlight(m, (dest || isEP) ? 'capture' : 'move');
                 }
                 return;
             }
