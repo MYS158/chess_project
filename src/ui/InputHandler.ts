@@ -60,4 +60,24 @@ export class InputHandler {
             }
         });
     }
+
+    public static selectPromotion(): number {
+        let choice: number | null = null;
+        do {
+            const input = window.prompt(
+                'Promotion! Select piece:\n' +
+                '1 = Queen\n' +
+                '2 = Rook\n' +
+                '3 = Bishop\n' +
+                '4 = Knight',
+                '1'
+            );
+            if (input === null) {
+                choice = 1;
+                break;
+            }
+            choice = parseInt(input, 10);
+        } while (![1, 2, 3, 4].includes(choice));
+        return choice;
+    }
 }
