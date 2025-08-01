@@ -13,23 +13,24 @@ export class Game {
     }
 
     play(move: Move): void {
-        // TODO: validate legality, check, promotion, etc.
+        this.castling(move);
         this.board.movePiece(move);
         this.history.push(move);
         this.currentPlayer = getOpponentColor(this.currentPlayer);
+    }
 
-        if (move.piece.category === 'king' && Math.abs(move.from.x - move.to.x) === 2) {
-            const isKingside = move.to.x > move.from.x;
-            const row = move.from.y;
-            const rookFrom = new Position(isKingside ? 7 : 0, row);
-            const rookTo = new Position(isKingside ? 5 : 3, row);
-            const rook = this.board.getPiece(rookFrom);
-            this.board.movePiece({
-                piece: rook!,
-                from: rookFrom,
-                to: rookTo
-            });
-        }
+    castling(move: Move): void {
+        if (move.piece.category !== 'king' || Math.abs(move.from.x - move.to.x) !== 2) return;
+        const isKingside = move.to.x > move.from.x;
+        const row = move.from.y;
+        const rookFrom = new Position(isKingside ? 7 : 0, row);
+        const rookTo = new Position(isKingside ? 5 : 3, row);
+        const rook = this.board.getPiece(rookFrom);
+        this.board.movePiece({
+            piece: rook!,
+            from: rookFrom,
+            to: rookTo
+        });
     }
 
     getLastMove(): Move | null {
