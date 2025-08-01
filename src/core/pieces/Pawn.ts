@@ -48,11 +48,6 @@ export class Pawn extends Piece {
     public getRawMoves(): Position[] {
         const moves: Position[] = [];
         const dir = this.color === 'white' ? -1 : 1;
-        moves.push(new Position(this.position.x, this.position.y + dir));
-        const start = this.color === 'white' ? 6 : 1;
-        if (this.position.y === start) {
-            moves.push(new Position(this.position.x, this.position.y + 2 * dir));
-        }
         for (const dx of [-1, 1]) {
             moves.push(new Position(this.position.x + dx, this.position.y + dir));
         }

@@ -36,7 +36,11 @@ export class InputHandler {
                 this.selected = pos;
                 this.renderer.render(board);
                 this.renderer.highlight(pos, 'selected');
-                const legalMoves = piece.getLegalMoves(board, lastMove);
+
+                // highlight legal moves using Board instance
+                const legalMoves = piece.getLegalMoves(board, lastMove).filter(
+                    to => board.isValidMove({from: pos, to, piece})
+                );
                 for (const m of legalMoves) {
                     const dest = board.getPiece(m);
                     const isEP = piece.category === 'pawn' && lastMove && isEnPassantCapture(m, getOpponentColor(piece.color));
@@ -50,7 +54,9 @@ export class InputHandler {
                 const from = this.selected;
                 const moving = board.getPiece(from);
                 if (!moving) return;
-                const legalMoves = moving.getLegalMoves(board, lastMove);
+                const legalMoves = moving.getLegalMoves(board, lastMove).filter(
+                    to => board.isValidMove({from, to, piece: moving})
+                );
                 if (!legalMoves.some(m => m.equals(pos))) return;
 
                 const move: Move = { piece: moving, from, to: pos };
